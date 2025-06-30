@@ -15,29 +15,37 @@
 
                 <div class="hidden md:flex space-x-4">
                     @auth
-                        @if (auth()->user()->role === 'admin')
-                            <a href="#" class="text-gray-700 hover:text-blue-600">Register</a>
-                            <a href="#" class="text-gray-700 hover:text-blue-600">Reports</a>
-                            <a href="{{ route('equipments.index') }}" class="text-gray-700 hover:text-blue-600">Equipments</a>
-                        @else
-                            <a href="#" class="text-gray-700 hover:text-blue-600">Equipments</a>
-                            <a href="#" class="text-gray-700 hover:text-blue-600">Reservations</a>
-                        @endif
-
-                        <div class="relative group">
-                            <button class="text-gray-700 hover:text-blue-600 focus:outline-none">
-                                Account ▾
-                            </button>
-                            <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
-                                <div class="px-4 py-2 text-sm text-gray-600">{{ auth()->user()->email }}</div>
-                                <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
-                                <hr class="my-1">
-                                <a href="{{ route('users.logout') }}" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Logout</a>
-                            </div>
-                        </div>
+                    @if (auth()->user()->role === 'admin')
+                    <a href="#" class="text-gray-700 hover:text-blue-600">Register</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600">Reports</a>
+                    <a href="{{ route('equipments.index') }}" class="text-gray-700 hover:text-blue-600">Equipments</a>
                     @else
-                        <a href="#" class="text-gray-700 hover:text-blue-600">Equipments</a>
-                        <a href="{{ route('login') }}" class="text-gray-700 hover:text-blue-600">Login</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600">Equipments</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600">Reservations</a>
+                    @endif
+
+                    <div class="relative group">
+                        <button class="text-gray-700 hover:text-blue-600 focus:outline-none">
+                            Account ▾
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                            <div class="px-4 py-2 text-sm text-gray-600">{{ auth()->user()->email }}</div>
+                            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
+                            <hr class="my-1">
+                            <a href="#"
+                                class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                                @csrf
+                            </form>
+                        </div>
+                    </div>
+
+                    @else
+                    <a href="#" class="text-gray-700 hover:text-blue-600">Equipments</a>
+                    <a href="{{ route('login') }}" class="text-gray-700 hover:text-blue-600">Login</a>
                     @endauth
                 </div>
             </div>
@@ -48,3 +56,14 @@
         @yield('content')
     </main>
 </body>
+
+<script>
+    document.querySelectorAll(".close-alert").forEach(function(button) {
+        button.addEventListener("click", function() {
+            const alert = button.closest(".alert-box");
+            if (alert) {
+                alert.remove();
+            }
+        });
+    });
+</script>
