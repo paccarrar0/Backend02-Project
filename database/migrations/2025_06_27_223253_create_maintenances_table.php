@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('maintenances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('equipment_id')->constrained()->onDelete('cascade');
+            $table->foreignId('equipment_id')->constrained('equipments')->onDelete('cascade');
             $table->text('description')->nullable();
             $table->enum('status', ['pending', 'in_progress', 'completed'])->default('pending');
             $table->timestamps();

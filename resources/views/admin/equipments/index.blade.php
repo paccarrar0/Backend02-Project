@@ -17,34 +17,33 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     @foreach ($equipments as $item)
+    <div class="bg-white rounded-xl shadow p-5 flex flex-col justify-between h-full">
+      <div>
+        <h2 class="text-lg font-semibold text-gray-800">{{ $item->name }}</h2>
+        <p class="text-sm text-gray-500">{{ $item->category }}</p>
+        <p class="text-md font-medium text-gray-700 mt-2">${{ $item->rental_price }}/day</p>
+      </div>
 
-    <div class="p-4">
-      <h2 class="text-lg font-semibold text-gray-800">{{ $item->name }}</h2>
-      <p class="text-sm text-gray-500">{{ $item->category }}</p>
-      <p class="text-md font-medium text-gray-700 mt-2">${{ $item->rental_price }}/day</p>
+      <div class="flex justify-end items-center gap-3 mt-4">
+        <a href="{{ route('maintenances.index', $item->id) }}" class="text-gray-500 hover:text-blue-600" title="Maintenances">
+          <i class="bi bi-wrench"></i>
+        </a>
+        <a href="{{ route('equipments.show', $item->id) }}" class="text-gray-500 hover:text-blue-600" title="Details">
+          <i class="bi bi-search"></i>
+        </a>
+        <a href="{{ route('equipments.edit', $item->id) }}" class="text-gray-500 hover:text-blue-600" title="Edit">
+          <i class="bi bi-pencil"></i>
+        </a>
+        <form action="{{ route('equipments.destroy', $item->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this equipment?');">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="text-gray-500 hover:text-red-600" title="Delete">
+            <i class="bi bi-trash3"></i>
+          </button>
+        </form>
+      </div>
     </div>
-
-    <div class="flex justify-end gap-2 px-4 pb-4">
-      <a href="{{ route('maintenances.index', ['id' => $item->id]) }}" class="text-gray-500 hover:text-blue-600">
-        <i class="bi bi-wrench"></i>
-      </a>
-      <a href="{{ route('equipments.show', ['id' => $item->id]) }}" class="text-gray-500 hover:text-blue-600">
-        <i class="bi bi-search"></i>
-      </a>
-      <a href="{{ route('equipments.edit', ['id' => $item->id]) }}" class="text-gray-500 hover:text-blue-600">
-        <i class="bi bi-pencil"></i>
-      </a>
-      <form action="{{ route('equipments.destroy', $item->id) }}" method="POST" class="inline-block">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="text-gray-500 hover:text-red-600">
-          <i class="bi bi-trash3"></i>
-        </button>
-      </form>
-    </div>
+    @endforeach
   </div>
-  @endforeach
 </div>
-</div>
-
 @endsection

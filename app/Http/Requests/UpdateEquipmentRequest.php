@@ -14,8 +14,13 @@ class UpdateEquipmentRequest extends FormRequest
   public function rules()
   {
     return [
-      'name' => 'required|string|max:255',
-      'serial_number' => 'required|string|unique:equipments,serial_number,' . $this->route('equipment')->id,
+      'name' => 'nullable|string|max:255',
+      'description' => 'nullable|string|max:500',
+      'category' => 'nullable|string|max:100',
+      'status' => 'nullable|string|in:available,in_use,maintenance',
+      'rental_price' => 'nullable|numeric|min:0',
+      'location' => 'nullable|string|max:255',
+      'serial_number' => 'nullable|string|max:100',
     ];
   }
 }

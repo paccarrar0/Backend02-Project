@@ -28,9 +28,9 @@ class EquipmentController extends Controller
 
         try {
             Equipment::create($data);
-            return redirect()->route('equipments.index')->with('success', 'Equipamento cadastrado com sucesso!');
+            return redirect()->route('equipments.index')->with('success', 'Equipment registered successfully!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erro ao cadastrar equipamento!');
+            return redirect()->back()->with('error', 'Error registering equipment!');
         }
     }
 
@@ -54,9 +54,9 @@ class EquipmentController extends Controller
 
         try {
             $equipment->update($data);
-            return redirect()->route('equipments.index')->with('success', 'Equipamento atualizado com sucesso!');
+            return redirect()->route('equipments.index')->with('success', 'Equipment updated successfully!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erro ao atualizar equipamento!');
+            return redirect()->back()->with('error', 'Error updating equipment!');
         }
     }
 
@@ -64,9 +64,9 @@ class EquipmentController extends Controller
     {
         try {
             $equipment->delete();
-            return redirect()->route('equipments.index')->with('success', 'Equipamento excluído com sucesso!');
+            return redirect()->route('equipments.index')->with('success', 'Equipment deleted successfully!');
         } catch (\Exception $e) {
-            return redirect()->route('equipments.index')->with('error', 'Erro ao excluir equipamento!');
+            return redirect()->route('equipments.index')->with('error', 'Error deleting equipment!');
         }
     }
 }

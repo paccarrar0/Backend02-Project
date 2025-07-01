@@ -19,7 +19,7 @@ class Maintenance extends Model
 
     public function equipment(): BelongsTo
     {
-        return $this->belongsTo(Equipment::class, 'equipment_id');
+        return $this->belongsTo(Equipment::class);
     }
 
     public function getErrors(): array

@@ -1,51 +1,45 @@
 @extends('layouts.application')
 
 @section('content')
-<div class="container mt-5">
-  <div class="flex justify-between items-center mb-4">
-    <h1 class="text-2xl font-bold">Maintenances</h1>
-    <div class="w-10">
-      <a href="{{ route('maintenances.new', ['id' => $equipment->id]) }}" class="btn btn-primary btn-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-        New
-      </a>
-    </div>
+<div class="container mt-5 max-w-5xl mx-auto">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Maintenances</h1>
+    <a href="{{ route('maintenances.create', $equipment) }}"
+      class="bg-blue-600 text-white px-5 py-2 rounded-md hover:bg-blue-700 transition font-medium">
+      New
+    </a>
   </div>
 
-  <div class="maintenance-list mt-1 flex justify-center">
-    @if ($maintenances->isEmpty())
-      <div class="w-full">
-        <div class="bg-yellow-100 text-yellow-700 p-4 rounded" role="alert">
-          No maintenances found.
-        </div>
-      </div>
-    @endif
+  @if ($maintenances->isEmpty())
+  <div class="bg-yellow-100 text-yellow-700 p-4 rounded mb-6" role="alert">
+    No maintenances found.
+  </div>
+  @endif
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
-      @foreach ($maintenances as $maintenance)
-        <div class="border border-opacity-25 rounded mb-3 relative">
-          <div class="p-4">
-            <p class="text-gray-500 text-lg">{{ $maintenance->description }}</p>
-            <p class="text-gray-500 text-lg">Status: {{ $maintenance->status }}</p>
-          </div>
-          <div class="absolute bottom-2 right-2 flex space-x-2">
-            <a href="{{ route('maintenances.edit', ['id' => $maintenance->id, 'equipment_id' => $equipment->id]) }}" class="text-blue-600 hover:text-blue-800 p-1">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 11l3 3 7-7-3-3-7 7z" />
-              </svg>
-            </a>
-            <form action="{{ route('maintenances.destroy', ['id' => $maintenance->id, 'equipment_id' => $equipment->id]) }}" method="POST" class="m-0 p-0" onsubmit="return confirm('Are you sure?');">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="text-red-600 hover:text-red-800 p-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-6 6-6-6" />
-                </svg>
-              </button>
-            </form>
-          </div>
-        </div>
-      @endforeach
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    @foreach ($maintenances as $maintenance)
+    <div class="bg-white rounded-lg shadow p-5 relative flex flex-col justify-between h-full">
+      <div>
+        <p class="text-gray-700 text-lg mb-2">{{ $maintenance->description }}</p>
+        <p class="text-gray-500 font-medium">Status: <span class="capitalize">{{ $maintenance->status }}</span></p>
+      </div>
+
+      <div class="absolute bottom-4 right-4 flex space-x-3">
+        <a href="{{ route('maintenances.edit', [$equipment, $maintenance]) }}"
+          class="text-blue-600 hover:text-blue-800 p-2 rounded" aria-label="Edit maintenance">
+          <i class="bi bi-pencil"></i>
+        </a>
+
+        <form action="{{ route('maintenances.destroy', [$equipment, $maintenance]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this maintenance?');">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="text-red-600 hover:text-red-800 p-2 rounded" aria-label="Delete maintenance">
+            <i class="bi bi-trash3"></i>
+          </button>
+        </form>
+      </div>
     </div>
+    @endforeach
   </div>
 </div>
 @endsection

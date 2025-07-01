@@ -23,12 +23,11 @@
                     <a href="#" class="text-gray-700 hover:text-blue-600">Equipments</a>
                     <a href="#" class="text-gray-700 hover:text-blue-600">Reservations</a>
                     @endif
-
-                    <div class="relative group">
-                        <button class="text-gray-700 hover:text-blue-600 focus:outline-none">
+                    <div class="relative">
+                        <button id="accountDropdownBtn" class="text-gray-700 hover:text-blue-600 focus:outline-none">
                             Account ▾
                         </button>
-                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-50">
+                        <div id="accountDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden z-50">
                             <div class="px-4 py-2 text-sm text-gray-600">{{ auth()->user()->email }}</div>
                             <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
                             <hr class="my-1">
@@ -66,4 +65,20 @@
             }
         });
     });
+
+    const dropdownBtn = document.getElementById('accountDropdownBtn');
+    const dropdownMenu = document.getElementById('accountDropdown');
+
+    if (dropdownBtn && dropdownMenu) {
+        dropdownBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!dropdownMenu.contains(e.target) && !dropdownBtn.contains(e.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
+        });
+    }
 </script>

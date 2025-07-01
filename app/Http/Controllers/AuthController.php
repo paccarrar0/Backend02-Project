@@ -25,13 +25,13 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('admin/home'))
-                ->with('success', 'Login realizado com sucesso!');
+            return redirect()->intended(route('admin.home'))
+                ->with('success', 'Login successfully!');
         }
 
         return back()->with(
             'error',
-            'Login Incorreto',
+            'INcorrect login',
         )->onlyInput('email');
     }
 
