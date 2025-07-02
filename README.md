@@ -16,3 +16,8 @@ The Equipment Reservation Management System (ERMS) is a web platform that makes 
 - Execute ` touch ./database/database.sqlite ` to create database file
 - Execute ` php artisan migrate:fresh --seed ` to migrate and populate the database
 - Then, execute ` composer run dev ` to run the project locally
+
+### Observations
+
+- There is some user already registered, you can access the aplication with ` fulano@example.com ` and ` 123456 ` credentials
+- If you want to run the application without any data, run ` php artisan migrate:fresh ` instead of ` php artisan migrate:fresh --seed `
